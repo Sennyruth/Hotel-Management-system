@@ -1,0 +1,49 @@
+<section class="hero">
+  <div class="container hero-inner">
+    <span class="eyebrow">Mombasa &middot; Kenya</span>
+    <h1>A quiet harbour to come back to</h1>
+    <p>
+      Sea-facing rooms, a rooftop pool and a spa five minutes from the old town. Reserve in a few clicks — no
+      prepayment required.
+    </p>
+    <div class="hero-actions">
+      <a class="btn btn-primary" routerLink="/rooms">Browse rooms</a>
+      <a class="btn btn-ghost" routerLink="/bookings">Find my booking</a>
+    </div>
+  </div>
+</section>
+
+<div class="container search-wrap">
+  <app-search-form [checkIn]="checkIn" [checkOut]="checkOut" [guests]="guests" (search)="onSearch($event)" />
+</div>
+
+<section class="section container">
+  <span class="eyebrow">Why guests stay</span>
+  <h2>Everything you need for a slow coastal week</h2>
+  <div class="highlights">
+    @for (highlight of highlights; track highlight.title) {
+      <article class="card highlight">
+        <h3>{{ highlight.title }}</h3>
+        <p>{{ highlight.text }}</p>
+      </article>
+    }
+  </div>
+</section>
+
+<section class="section container">
+  <div class="section-head">
+    <div>
+      <span class="eyebrow">Rooms &amp; suites</span>
+      <h2>Popular this season</h2>
+    </div>
+    <a class="btn btn-ghost" routerLink="/rooms">See all rooms</a>
+  </div>
+
+  <div class="grid">
+    @for (room of rooms(); track room.id) {
+      <app-room-card [room]="room" [checkIn]="checkIn" [checkOut]="checkOut" [guests]="guests" />
+    } @empty {
+      <p>Loading rooms…</p>
+    }
+  </div>
+</section>

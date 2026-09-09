@@ -1,0 +1,30 @@
+<header class="site-header">
+  <a class="brand" routerLink="/">
+    <span class="brand-mark">AB</span>
+    <span class="brand-text">
+      <strong>Azure Bay</strong>
+      <small>Hotel &amp; Spa</small>
+    </span>
+  </a>
+
+  <nav>
+    <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Home</a>
+    <a routerLink="/rooms" routerLinkActive="active">Rooms</a>
+    <a routerLink="/bookings" routerLinkActive="active">My bookings</a>
+    <a routerLink="/admin" routerLinkActive="active">Admin</a>
+  </nav>
+
+  <a class="btn btn-primary header-cta" routerLink="/rooms">Book a stay</a>
+</header>
+
+<main>
+  <router-outlet />
+</main>
+
+<footer class="site-footer">
+  <div>
+    <strong>Azure Bay Hotel &amp; Spa</strong>
+    <p>14 Harbour Promenade, Mombasa &middot; +254 700 000 000 &middot; stay&#64;azurebay.example</p>
+  </div>
+  <p class="copyright">&copy; {{ year }} Azure Bay Hotel. Built with Angular &amp; Spring Boot.</p>
+</footer>

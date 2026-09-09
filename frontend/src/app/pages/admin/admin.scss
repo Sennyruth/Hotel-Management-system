@@ -1,0 +1,42 @@
+.head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: end;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  margin: 1.4rem 0;
+}
+
+.stat {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  padding: 1.2rem;
+
+  span {
+    color: var(--muted);
+    font-size: 0.82rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  strong {
+    font-size: 1.8rem;
+  }
+}
+
+.table-wrap {
+  overflow-x: auto;
+  padding: 0.4rem 0.6rem;
+}
+
+.btn-small {
+  padding: 0.35rem 0.9rem;
+  font-size: 0.82rem;
+}

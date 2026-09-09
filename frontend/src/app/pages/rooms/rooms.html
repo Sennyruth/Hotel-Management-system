@@ -1,0 +1,34 @@
+<section class="section container">
+  <span class="eyebrow">Availability</span>
+  <h1>Rooms &amp; suites</h1>
+  <p class="lead">Rates include breakfast, Wi-Fi and pool access. Free cancellation up to 48 hours before arrival.</p>
+
+  <app-search-form
+    [checkIn]="checkIn()"
+    [checkOut]="checkOut()"
+    [guests]="guests()"
+    [pending]="loading()"
+    (search)="onSearch($event)"
+  />
+
+  @if (error()) {
+    <p class="alert alert-error results-message">{{ error() }}</p>
+  } @else if (loading()) {
+    <p class="results-message">Checking availability…</p>
+  } @else {
+    <p class="results-message">
+      {{ rooms().length }} room type(s) available for {{ guests() }} guest(s) between {{ checkIn() }} and
+      {{ checkOut() }}.
+    </p>
+  }
+
+  <div class="grid">
+    @for (room of rooms(); track room.id) {
+      <app-room-card [room]="room" [checkIn]="checkIn()" [checkOut]="checkOut()" [guests]="guests()" />
+    } @empty {
+      @if (!loading() && !error()) {
+        <p>No rooms match those dates. Try a shorter stay or fewer guests.</p>
+      }
+    }
+  </div>
+</section>

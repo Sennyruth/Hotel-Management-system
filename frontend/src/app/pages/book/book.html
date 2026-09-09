@@ -1,0 +1,95 @@
+<section class="section container">
+  @if (confirmation(); as booking) {
+    <div class="card confirmation">
+      <span class="eyebrow">Reservation confirmed</span>
+      <h1>See you soon, {{ booking.guestName }}</h1>
+      <p class="alert alert-success">
+        Your booking reference is <strong>{{ booking.reference }}</strong>. We have sent the details to
+        {{ booking.guestEmail }}.
+      </p>
+
+      <dl class="summary">
+        <div><dt>Room</dt><dd>{{ booking.roomName }}</dd></div>
+        <div><dt>Check in</dt><dd>{{ booking.checkIn }}</dd></div>
+        <div><dt>Check out</dt><dd>{{ booking.checkOut }}</dd></div>
+        <div><dt>Guests</dt><dd>{{ booking.guests }}</dd></div>
+        <div><dt>Total</dt><dd>{{ booking.totalPrice | currency: 'USD' }}</dd></div>
+      </dl>
+
+      <div class="actions">
+        <a class="btn btn-primary" routerLink="/bookings" [queryParams]="{ email: booking.guestEmail }">View my bookings</a>
+        <a class="btn btn-ghost" routerLink="/rooms">Book another room</a>
+      </div>
+    </div>
+  } @else {
+    <span class="eyebrow">Reservation</span>
+    <h1>Complete your booking</h1>
+
+    <div class="layout">
+      <form class="card form" (submit)="submit($event)">
+        <div class="row">
+          <label>
+            Full name
+            <input name="guestName" [(ngModel)]="form.guestName" required minlength="2" />
+          </label>
+          <label>
+            Email
+            <input type="email" name="guestEmail" [(ngModel)]="form.guestEmail" required />
+          </label>
+        </div>
+
+        <div class="row">
+          <label>
+            Phone (optional)
+            <input name="guestPhone" [(ngModel)]="form.guestPhone" />
+          </label>
+          <label>
+            Guests
+            <select name="guests" [(ngModel)]="form.guests">
+              @for (option of [1, 2, 3, 4, 5]; track option) {
+                <option [value]="option">{{ option }}</option>
+              }
+            </select>
+          </label>
+        </div>
+
+        <div class="row">
+          <label>
+            Check in
+            <input type="date" name="checkIn" [min]="minDate" [(ngModel)]="form.checkIn" required />
+          </label>
+          <label>
+            Check out
+            <input type="date" name="checkOut" [min]="minDate" [(ngModel)]="form.checkOut" required />
+          </label>
+        </div>
+
+        @if (error()) {
+          <p class="alert alert-error">{{ error() }}</p>
+        }
+
+        <button class="btn btn-primary" type="submit" [disabled]="submitting() || nights < 1">
+          {{ submitting() ? 'Reserving…' : 'Confirm reservation' }}
+        </button>
+        <p class="fine-print">No prepayment needed — pay at the hotel. Free cancellation up to 48 hours before arrival.</p>
+      </form>
+
+      @if (room(); as selected) {
+        <aside class="card summary-card">
+          <img [src]="selected.imageUrl" [alt]="selected.name" />
+          <div class="summary-body">
+            <span class="eyebrow">{{ selected.type }}</span>
+            <h2>{{ selected.name }}</h2>
+            <p>{{ selected.description }}</p>
+            <dl class="summary">
+              <div><dt>Rate</dt><dd>{{ selected.pricePerNight | currency: 'USD' }} / night</dd></div>
+              <div><dt>Nights</dt><dd>{{ nights }}</dd></div>
+              <div><dt>Sleeps</dt><dd>{{ selected.capacity }}</dd></div>
+              <div class="total"><dt>Total</dt><dd>{{ total | currency: 'USD' }}</dd></div>
+            </dl>
+          </div>
+        </aside>
+      }
+    </div>
+  }
+</section>

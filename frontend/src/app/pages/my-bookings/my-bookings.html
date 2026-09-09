@@ -1,0 +1,60 @@
+<section class="section container">
+  <span class="eyebrow">Guest area</span>
+  <h1>My bookings</h1>
+  <p class="lead">Enter the email address you booked with to review or cancel a reservation.</p>
+
+  <form class="card lookup" (submit)="submit($event)">
+    <label>
+      Email
+      <input type="email" name="email" [(ngModel)]="email" placeholder="you@example.com" required />
+    </label>
+    <button class="btn btn-primary" type="submit">Find bookings</button>
+  </form>
+
+  @if (error()) {
+    <p class="alert alert-error">{{ error() }}</p>
+  }
+
+  @if (searched()) {
+    @if (bookings().length) {
+      <div class="card table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Reference</th>
+              <th>Room</th>
+              <th>Dates</th>
+              <th>Guests</th>
+              <th>Total</th>
+              <th>Status</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (booking of bookings(); track booking.id) {
+              <tr>
+                <td>{{ booking.reference }}</td>
+                <td>{{ booking.roomName }}</td>
+                <td>{{ booking.checkIn }} → {{ booking.checkOut }}</td>
+                <td>{{ booking.guests }}</td>
+                <td>{{ booking.totalPrice | currency: 'USD' }}</td>
+                <td>
+                  <span class="badge" [class.badge-confirmed]="booking.status === 'CONFIRMED'" [class.badge-cancelled]="booking.status === 'CANCELLED'">
+                    {{ booking.status }}
+                  </span>
+                </td>
+                <td>
+                  @if (booking.status === 'CONFIRMED') {
+                    <button class="btn btn-ghost btn-small" type="button" (click)="cancel(booking)">Cancel</button>
+                  }
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    } @else {
+      <p>No bookings found for that email address.</p>
+    }
+  }
+</section>
