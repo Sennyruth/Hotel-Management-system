@@ -1,0 +1,24 @@
+<form class="search-form card" (submit)="submit($event)">
+  <label>
+    Check in
+    <input type="date" name="checkIn" [min]="minDate" [ngModel]="checkIn()" (ngModelChange)="form.checkIn = $event" required />
+  </label>
+
+  <label>
+    Check out
+    <input type="date" name="checkOut" [min]="minDate" [ngModel]="checkOut()" (ngModelChange)="form.checkOut = $event" required />
+  </label>
+
+  <label>
+    Guests
+    <select name="guests" [ngModel]="guests()" (ngModelChange)="form.guests = +$event">
+      @for (option of [1, 2, 3, 4, 5]; track option) {
+        <option [value]="option">{{ option }} guest(s)</option>
+      }
+    </select>
+  </label>
+
+  <button class="btn btn-primary" type="submit" [disabled]="pending()">
+    {{ pending() ? 'Searching…' : 'Check availability' }}
+  </button>
+</form>

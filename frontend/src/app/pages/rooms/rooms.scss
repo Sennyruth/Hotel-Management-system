@@ -1,0 +1,16 @@
+.lead {
+  max-width: 620px;
+  color: var(--muted);
+}
+
+.results-message {
+  margin: 1.4rem 0 0;
+  color: var(--muted);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+  gap: 1.4rem;
+  margin-top: 1.4rem;
+}

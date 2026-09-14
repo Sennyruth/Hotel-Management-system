@@ -1,0 +1,39 @@
+<article class="room-card card">
+  <img [src]="room().imageUrl" [alt]="room().name" loading="lazy" />
+
+  <div class="body">
+    <header>
+      <span class="eyebrow">{{ room().type }}</span>
+      <h3>{{ room().name }}</h3>
+    </header>
+
+    <p class="description">{{ room().description }}</p>
+
+    <ul class="amenities">
+      @for (amenity of room().amenities; track amenity) {
+        <li>{{ amenity }}</li>
+      }
+    </ul>
+
+    <footer>
+      <div class="price">
+        <strong>{{ room().pricePerNight | currency: 'USD' }}</strong>
+        <span>per night &middot; sleeps {{ room().capacity }}</span>
+        @if (room().totalPrice !== null) {
+          <small>{{ room().totalPrice | currency: 'USD' }} for {{ room().nights }} night(s)</small>
+        }
+      </div>
+
+      <a
+        class="btn btn-primary"
+        [routerLink]="['/book', room().id]"
+        [queryParams]="{ checkIn: checkIn(), checkOut: checkOut(), guests: guests() }"
+        >Reserve</a
+      >
+    </footer>
+
+    @if (room().unitsAvailable <= 2) {
+      <p class="scarcity">Only {{ room().unitsAvailable }} left for these dates</p>
+    }
+  </div>
+</article>
